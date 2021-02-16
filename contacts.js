@@ -1,4 +1,4 @@
-const fs = require("fs/promises");
+const fs = require("fs").promises;
 const path = require("path");
 const shortid = require("shortid");
 
@@ -6,10 +6,12 @@ const contactsPath = path.join(__dirname, "/db/contacts.json");
 
 async function listContacts() {
   try {
-    const listOfContacts = await fs.readFile(contactsPath, "utf8");
+    const allContacts = await fs.readFile(contactsPath, "utf8");
+    const listOfContacts = JSON.parse(allContacts);
+
     console.log("List of contacts:");
     console.table(listOfContacts);
-    return JSON.parse(listOfContacts);
+    return listOfContacts;
   } catch (error) {
     return console.error(error.message);
   }
