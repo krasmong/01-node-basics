@@ -20,10 +20,10 @@ async function listContacts() {
 async function getContactById(contactId) {
   try {
     const allContacts = await fs.readFile(contactsPath, "utf8");
-    const getContactById = JSON.parse(allContacts).find(
+    const contactById = JSON.parse(allContacts).find(
       ({ id }) => id === contactId
     );
-    console.table(getContactById);
+    console.table(contactById);
     return getContactById;
   } catch (error) {
     return console.error(error.message);
@@ -55,22 +55,22 @@ async function addContact(name, email, phone) {
     const allContacts = await fs.readFile(contactsPath, "utf8");
     const listOfContacts = JSON.parse(allContacts);
 
-    const addNewContact = {
+    const newContact = {
       id: shortid.generate(),
       name,
       email,
       phone,
     };
-    const myNewContacts = [...listOfContacts, addNewContact];
+    const newContactsList = [...listOfContacts, newContact];
 
     await fs.writeFile(
       contactsPath,
-      JSON.stringify(myNewContacts, null, 2),
+      JSON.stringify(newContactsList, null, 2),
       "utf8"
     );
 
-    console.table(myNewContacts);
-    return myNewContacts;
+    console.table(newContactsList);
+    return newContactsList;
   } catch (error) {
     return console.error(error.message);
   }
